@@ -24,6 +24,15 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // WhatsApp colors
+  const WHATSAPP_GREEN = "#25D366"
+  const WHATSAPP_LIGHT_GREEN = "#128C7E"
+  const WHATSAPP_DARK_GREEN = "#075E54"
+  const LEMON_ACCENT = "#C7FF1A" // Our brand's lemon accent
+  const OFF_WHITE = "#F6F8F5"
+  const CHARCOAL = "#1F2A24"
+  const PRIMARY_GREEN = "#0A5C36"
+
   const navigation = [
     { name: "Home", href: "/" },
     {
@@ -34,6 +43,7 @@ export default function Navbar() {
         { name: "Dhaat Logistics", href: "/services/logistics" },
         { name: "Dhaat Laundry", href: "/services/laundry" },
         { name: "Dhaat Support Team", href: "/services/support" },
+        { name: "Dhaat Arabic Poetry", href: "/services/poetry" },
       ],
     },
     { name: "Classes", href: "/classes" },
@@ -51,8 +61,13 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Top Announcement Bar */}
-      <div className="w-full bg-gradient-to-r from-[#0A5C36] via-[#0d7a46] to-[#0A5C36] py-2">
+      {/* Top Announcement Bar - Using WhatsApp gradient */}
+      <div 
+        className="w-full py-2"
+        style={{
+          background: `linear-gradient(135deg, ${WHATSAPP_DARK_GREEN} 0%, ${WHATSAPP_LIGHT_GREEN} 50%, ${WHATSAPP_GREEN} 100%)`
+        }}
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center">
             <p className="text-sm font-medium text-white animate-pulse">
@@ -67,8 +82,8 @@ export default function Navbar() {
         <div
           className="border-b transition-all duration-300"
           style={{
-            backgroundColor: isScrolled ? "rgba(246,248,245,0.95)" : "#F6F8F5",
-            borderColor: "#E8F5E9",
+            backgroundColor: isScrolled ? `rgba(6, 94, 84, 0.95)` : WHATSAPP_DARK_GREEN,
+            borderColor: WHATSAPP_LIGHT_GREEN,
             backdropFilter: "blur(12px)",
             WebkitBackdropFilter: "blur(12px)",
           }}
@@ -79,11 +94,12 @@ export default function Navbar() {
               <Link href="/" className="group flex items-center">
                 <div className="relative h-16 w-44 transition-all duration-300 group-hover:scale-[1.03]">
                   <Image
-                    src="/images/dhaat-logo.jpg"
+                    src="/images/dhaat-logo2.png"
                     alt="Dhaat Hub Logo"
                     fill
                     priority
                     className="object-contain drop-shadow-md"
+                    style={{ filter: "brightness(0) invert(1)" }}
                   />
                 </div>
               </Link>
@@ -93,18 +109,27 @@ export default function Navbar() {
                 {navigation.map((item) =>
                   item.dropdown ? (
                     <DropdownMenu key={item.name}>
-                      <DropdownMenuTrigger className="flex items-center gap-1.5 text-[16px] font-semibold text-[#1F2A24] hover:text-[#0A5C36] transition-all duration-200 group">
+                      <DropdownMenuTrigger 
+                        className="flex items-center gap-1.5 text-[16px] font-semibold transition-all duration-200 group"
+                        style={{ color: OFF_WHITE }}
+                      >
                         <span className="relative">
                           {item.name}
-                          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#0A5C36] to-[#C7FF1A] group-hover:w-full transition-all duration-300"></span>
+                          <span 
+                            className="absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full"
+                            style={{ background: LEMON_ACCENT }}
+                          ></span>
                         </span>
-                        <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180 duration-200" />
+                        <ChevronDown 
+                          className="h-4 w-4 transition-transform group-hover:rotate-180 duration-200" 
+                          style={{ color: LEMON_ACCENT }}
+                        />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent
                         className="mt-3 rounded-xl border shadow-xl min-w-[200px] p-2"
                         style={{
-                          backgroundColor: "rgba(246,248,245,0.98)",
-                          borderColor: "#E8F5E9",
+                          backgroundColor: WHATSAPP_DARK_GREEN,
+                          borderColor: WHATSAPP_LIGHT_GREEN,
                           backdropFilter: "blur(12px)",
                         }}
                       >
@@ -112,10 +137,18 @@ export default function Navbar() {
                           <DropdownMenuItem key={sub.name} asChild>
                             <Link
                               href={sub.href}
-                              className="px-4 py-3 text-[15px] text-[#1F2A24] hover:text-[#0A5C36] rounded-lg hover:bg-[#E8F5E9]/50 transition-all duration-200 flex items-center gap-2"
+                              className="px-4 py-3 text-[15px] rounded-lg transition-all duration-200 flex items-center gap-2 group"
+                              style={{ 
+                                color: OFF_WHITE,
+                              }}
                             >
-                              <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#0A5C36] to-[#C7FF1A] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                              {sub.name}
+                              <div 
+                                className="w-1.5 h-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                style={{ background: LEMON_ACCENT }}
+                              ></div>
+                              <span className="group-hover:text-[#C7FF1A] transition-colors">
+                                {sub.name}
+                              </span>
                             </Link>
                           </DropdownMenuItem>
                         ))}
@@ -125,10 +158,14 @@ export default function Navbar() {
                     <Link
                       key={item.name}
                       href={item.href}
-                      className="text-[16px] font-semibold text-[#1F2A24] hover:text-[#0A5C36] transition-all duration-200 relative group"
+                      className="text-[16px] font-semibold transition-all duration-200 relative group"
+                      style={{ color: OFF_WHITE }}
                     >
                       {item.name}
-                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#0A5C36] to-[#C7FF1A] group-hover:w-full transition-all duration-300"></span>
+                      <span 
+                        className="absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full"
+                        style={{ background: LEMON_ACCENT }}
+                      ></span>
                     </Link>
                   )
                 )}
@@ -140,8 +177,8 @@ export default function Navbar() {
                   size="lg"
                   className="gap-2 rounded-full px-6 font-semibold shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.02]"
                   style={{
-                    background: "linear-gradient(135deg, #C7FF1A 0%, #b0e517 100%)",
-                    color: "#1F2A24",
+                    background: LEMON_ACCENT,
+                    color: CHARCOAL,
                   }}
                   asChild
                 >
@@ -154,8 +191,12 @@ export default function Navbar() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="gap-2 rounded-full px-6 font-semibold border-2 hover:border-[#0A5C36] hover:bg-[#0A5C36]/5 transition-all duration-300 hover:scale-[1.02]"
-                  style={{ borderColor: "#0A5C36", color: "#0A5C36" }}
+                  className="gap-2 rounded-full px-6 font-semibold border-2 transition-all duration-300 hover:scale-[1.02]"
+                  style={{ 
+                    borderColor: LEMON_ACCENT, 
+                    color: LEMON_ACCENT,
+                    backgroundColor: 'transparent'
+                  }}
                   asChild
                 >
                   <a href="tel:09132030346">
@@ -168,7 +209,8 @@ export default function Navbar() {
               {/* Mobile Toggle Button */}
               <button
                 onClick={() => setIsOpen(true)}
-                className="lg:hidden rounded-xl p-2 text-[#0A5C36] hover:bg-[#E8F5E9]/50 transition-all duration-200"
+                className="lg:hidden rounded-xl p-2 transition-all duration-200"
+                style={{ color: LEMON_ACCENT }}
                 aria-label="Open menu"
               >
                 <Menu className="h-7 w-7" />
@@ -186,9 +228,10 @@ export default function Navbar() {
       >
         {/* Backdrop */}
         <div
-          className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
+          className={`absolute inset-0 transition-opacity duration-300 ${
             isOpen ? "opacity-100" : "opacity-0"
           }`}
+          style={{ backgroundColor: WHATSAPP_DARK_GREEN + 'CC' }}
           onClick={() => setIsOpen(false)}
         />
 
@@ -198,22 +241,28 @@ export default function Navbar() {
             isOpen ? "translate-x-0" : "translate-x-full"
           }`}
           style={{
-            background: "linear-gradient(135deg, #F6F8F5 0%, #E8F5E9 100%)",
+            background: `linear-gradient(135deg, ${WHATSAPP_DARK_GREEN} 0%, ${WHATSAPP_LIGHT_GREEN} 100%)`,
           }}
         >
           <div className="flex h-full flex-col">
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b" style={{ borderColor: "#0A5C36/20" }}>
+            <div className="flex items-center justify-between p-6 border-b" style={{ borderColor: LEMON_ACCENT + '40' }}>
               <div className="flex items-center gap-3">
-                <div className="w-2 h-8 bg-gradient-to-b from-[#0A5C36] to-[#C7FF1A] rounded-full"></div>
-                <h3 className="text-2xl font-bold text-[#0A5C36]">DHAAT HUB</h3>
+                <div 
+                  className="w-2 h-8 rounded-full"
+                  style={{ background: `linear-gradient(to bottom, ${LEMON_ACCENT} 0%, ${WHATSAPP_GREEN} 100%)` }}
+                ></div>
+                <h3 className="text-2xl font-bold" style={{ color: LEMON_ACCENT }}>
+                  DHAAT HUB
+                </h3>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="rounded-full p-2 hover:bg-[#0A5C36]/10 transition-colors"
+                className="rounded-full p-2 transition-colors"
+                style={{ color: LEMON_ACCENT }}
                 aria-label="Close menu"
               >
-                <X className="h-6 w-6 text-[#0A5C36]" />
+                <X className="h-6 w-6" />
               </button>
             </div>
 
@@ -225,29 +274,46 @@ export default function Navbar() {
                     <Link
                       href={item.href}
                       onClick={() => setIsOpen(false)}
-                      className="block py-4 px-4 rounded-xl text-lg font-semibold text-[#1F2A24] hover:text-[#0A5C36] hover:bg-white/50 transition-all duration-200 group-hover:translate-x-2"
+                      className="block py-4 px-4 rounded-xl text-lg font-semibold transition-all duration-200 group-hover:translate-x-2"
+                      style={{ 
+                        color: OFF_WHITE,
+                      }}
                     >
                       <div className="flex items-center justify-between">
                         <span>{item.name}</span>
                         {item.dropdown && (
-                          <ChevronDown className="h-5 w-5 text-[#0A5C36]/50 group-hover:text-[#0A5C36] transition-colors" />
+                          <ChevronDown 
+                            className="h-5 w-5 transition-colors" 
+                            style={{ color: LEMON_ACCENT + '80' }}
+                          />
                         )}
                       </div>
                     </Link>
                     
                     {/* Dropdown items for mobile */}
                     {item.dropdown && (
-                      <div className="ml-6 mt-1 space-y-2 border-l-2 border-[#0A5C36]/20 pl-4">
+                      <div 
+                        className="ml-6 mt-1 space-y-2 border-l-2 pl-4"
+                        style={{ borderColor: LEMON_ACCENT + '40' }}
+                      >
                         {item.dropdown.map((sub) => (
                           <Link
                             key={sub.name}
                             href={sub.href}
                             onClick={() => setIsOpen(false)}
-                            className="block py-2.5 px-4 rounded-lg text-base font-medium text-[#1F2A24]/80 hover:text-[#0A5C36] hover:bg-white/30 transition-all duration-200"
+                            className="block py-2.5 px-4 rounded-lg text-base font-medium transition-all duration-200"
+                            style={{ 
+                              color: OFF_WHITE + 'CC',
+                            }}
                           >
                             <div className="flex items-center gap-3">
-                              <div className="w-1.5 h-1.5 rounded-full bg-[#0A5C36]/40"></div>
-                              {sub.name}
+                              <div 
+                                className="w-1.5 h-1.5 rounded-full"
+                                style={{ backgroundColor: LEMON_ACCENT }}
+                              ></div>
+                              <span className="group-hover:text-[#C7FF1A] transition-colors">
+                                {sub.name}
+                              </span>
                             </div>
                           </Link>
                         ))}
@@ -259,9 +325,9 @@ export default function Navbar() {
             </nav>
 
             {/* Mobile CTA Buttons */}
-            <div className="border-t p-6 space-y-4" style={{ borderColor: "#0A5C36/20" }}>
+            <div className="border-t p-6 space-y-4" style={{ borderColor: LEMON_ACCENT + '40' }}>
               <div className="text-center mb-4">
-                <p className="text-sm text-[#1F2A24]/70 font-medium">
+                <p className="text-sm font-medium" style={{ color: OFF_WHITE + 'CC' }}>
                   Get in touch with us
                 </p>
               </div>
@@ -270,8 +336,8 @@ export default function Navbar() {
                 size="lg"
                 className="w-full gap-3 rounded-xl py-6 text-base font-semibold shadow-md hover:shadow-lg transition-all duration-300"
                 style={{
-                  background: "linear-gradient(135deg, #C7FF1A 0%, #b0e517 100%)",
-                  color: "#1F2A24",
+                  background: LEMON_ACCENT,
+                  color: CHARCOAL,
                 }}
                 asChild
               >
@@ -285,7 +351,11 @@ export default function Navbar() {
                 size="lg"
                 variant="outline"
                 className="w-full gap-3 rounded-xl py-6 text-base font-semibold border-2"
-                style={{ borderColor: "#0A5C36", color: "#0A5C36" }}
+                style={{ 
+                  borderColor: LEMON_ACCENT, 
+                  color: LEMON_ACCENT,
+                  backgroundColor: 'transparent'
+                }}
                 asChild
               >
                 <a href="tel:09132030346">
@@ -295,14 +365,15 @@ export default function Navbar() {
               </Button>
 
               {/* Contact Info */}
-              <div className="pt-6 border-t border-[#0A5C36]/10">
+              <div className="pt-6 border-t" style={{ borderColor: LEMON_ACCENT + '20' }}>
                 <div className="text-center space-y-2">
-                  <p className="text-sm text-[#1F2A24]/70">Email us at</p>
+                  <p className="text-sm" style={{ color: OFF_WHITE + 'CC' }}>Email us at</p>
                   <a 
-                    href="mailto:info@dhaathub.com" 
-                    className="text-[#0A5C36] font-semibold hover:underline transition-all duration-200"
+                    href="mailto:dhaathub@gmail.com" 
+                    className="font-semibold hover:underline transition-all duration-200"
+                    style={{ color: LEMON_ACCENT }}
                   >
-                    info@dhaathub.com
+                    dhaathub@gmail.com
                   </a>
                 </div>
               </div>
