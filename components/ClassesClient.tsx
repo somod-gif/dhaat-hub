@@ -34,7 +34,7 @@ export default function ClassesClient() {
         accountName: "Adetunji Abdul Salam B."
       },
       whatsappLink: "https://wa.me/message/TTMJGN7ULIXUH1",
-      startDate: "February",
+      startDate: "After Ramadan 2026",
       bannerImage: "/images/arabic-class-banner.jpeg"
     }
   ]
